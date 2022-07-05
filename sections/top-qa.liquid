@@ -1,0 +1,86 @@
+
+	<h3 class="section-title">{{ section.settings.title }}</h3>
+    <div class="bodycopy">{{ section.settings.body-copy-qa }}</div>
+	<div class="product-cards-static-cont">
+ 		{% for block in section.blocks limit: section.blocks.size %}
+  		{% if block.settings.product %}
+  		{% assign blockProduct = all_products[block.settings.product] %}
+  		{% endif %}
+      
+	
+       <a href="{{ blockProduct.url }}">
+     <div class="product-cards-static-img-cont">
+      
+
+     <img class="multicolumn-card__image" srcset="{{blockProduct.images[0] | img_url: '540x540'}}" src="{{blockProduct.images[0] | img_url: '540x540'}},
+     (min-width: 750px) 550px,
+     calc(100vw - 30px)" alt="" height="209" width="167" loading="lazy">
+
+       </div>
+        <div class="product-cards-static-detail">
+          <h3 class="product-cards-static-title">{{ blockProduct.title }}  <span>{{blockProduct.price | money}}</span></h3>
+          <ul>
+          {% for tag in blockProduct.tags %}
+            {% unless tag == 'SE' %}
+                <li>{{ tag }}</li>
+            {% endunless %}
+          {% endfor %}
+          </ul>
+        </div>  
+     </a>
+{% endfor %}
+  </div>
+{% schema %}
+
+
+{
+  "name": {
+    "en": " Quality Assurance Engineers"
+  },
+  "class": "qa-section-main",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+      
+    },{
+        "type": "textarea",
+        "id": "body-copy-qa",
+        "label": "Body Copy"
+        
+      }
+  ],
+  "blocks": [
+
+    {
+      "type": "product",
+      "name": {
+        "en": "Product"
+      },
+      "settings": [
+		{
+          "type": "product",
+          "id": "product",
+          "label": {
+            "en": "Product"
+          }
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": " Quality Assurance Engineers",
+      
+    }
+  ]
+}
+{% endschema %}
+   
+
+<style>
+  .bundle-static-cards .product-cards-static-cont {
+    justify-content: center;
+  }
+</style>
